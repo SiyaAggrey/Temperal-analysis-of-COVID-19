@@ -1,0 +1,484 @@
+
+#############
+Analysing temporal patterns of COVID_19
+
+Created by Siya Aggrey on 09/07/2022
+
+#############
+
+#clearing all variables in work space
+
+```{}
+rm(list=ls())
+```
+
+#setting a working directory
+
+```{}
+setwd("C:\\CONSULTANCIES\\DOCS\\COVID_WORK\\DATA")
+```
+
+#installing forecasting package
+
+```{}
+install.packages("fpp2")
+```
+
+#loading forecasting package
+```{}
+library(fpp2)
+```
+#EASTERN UGANDA
+
+#loading data
+
+```{}
+data<-read.csv("C:\\CONSULTANCIES\\DOCS\\COVID_WORK\\DATA\\east_1.csv")
+```
+
+
+
+
+#declaring time series data
+
+```{}
+e<-ts(data[,2], start=c(3,1), frequency =12)
+```
+
+
+
+
+```{}
+x=stl(e, s.window = "periodic")
+plot(x)
+plot(stl(nottem))
+```
+
+
+#timeplot
+
+```{}
+autoplot(e)
+```
+
+
+
+```{}
+autoplot(e)+ 
+ggtitle("Trend of COVID-19 cases in Eastern Uganda")+
+ylab("COVID-19 cases")
+```
+
+#investigating trend transformations
+
+```{}
+De<-diff(e)
+```
+
+#Timeplot for differenced data
+
+```{}
+autoplot(De)+ 
+ggtitle("Trend of change of COVID-19 cases in Eastern Uganda")+
+ylab("COVID-19 cases")
+```
+
+#investigating seasonality in trend
+
+```{}
+ggseasonplot(De)+ ggtitle("Seasonal trends of COVID-19 in Eastern Uganda")+
+ylab("COVID-19 cases")
+```
+
+##Using another seasonal plot to check
+
+```{}
+ggsubseriesplot(De)
+```
+
+###> there seems to be no seasonality in the trends
+
+#Forecasting using ARIMA model
+
+```{}
+fit_arima<-auto.arima(e,d=1,D=1,stepwise = FALSE, approximation=FALSE, trace=TRUE)
+print(summary(fit_arima))
+checkresiduals(fit_arima)
+```
+#>>> Residual SD = 31.79623, no autocorrelation
+
+#forecasting the COVID-19 trends in eastern Uganda
+
+```{}
+fcst<- forecast(fit_arima,h=12)
+autoplot(fcst)
+print(fcst)
+```
+
+#NORTHERN UGANDA
+
+#loading data
+
+```{}
+data<-read.csv("C:\\CONSULTANCIES\\DOCS\\COVID_WORK\\DATA\\north_1.csv")
+```
+
+#declaring time series data
+
+```{}
+n<-ts(data[,2], start=c(3,1), frequency =12)
+```
+#timeplot
+```{}
+autoplot(n)
+```
+
+```{}
+autoplot(n)+ 
+ggtitle("Trend of COVID-19 cases in Northern Uganda")+
+ylab("COVID-19 cases")
+```
+
+#investigating trend transformations
+
+```{}
+Dn<-diff(n)
+```
+
+#Timeplot for differenced data
+
+```{}
+autoplot(Dn)+ 
+ggtitle("Trend of change of COVID-19 cases in Northern Uganda")+
+ylab("COVID-19 cases")
+```
+
+#investigating seasonality in trend
+
+```{}
+ggseasonplot(Dn)+ ggtitle("Seasonal trends of COVID-19 in Northern Uganda")+
+ylab("COVID-19 cases")
+```
+
+##Using another seasonal plot to check
+
+```{}
+ggsubseriesplot(Dn)
+```
+
+###> there seems to be no seasonality in the trends
+
+#Forecasting using ARIMA model
+
+```{}
+fit_arima_n<-auto.arima(n,d=1,D=1,stepwise = FALSE, approximation=FALSE, trace=TRUE)
+print(summary(fit_arima_n))
+checkresiduals(fit_arima_n)
+```
+
+#forecasting the COVID-19 trends in eastern Uganda
+
+```{}
+fcst_n<- forecast(fit_arima_n,h=12)
+autoplot(fcst_n)
+```
+
+#WESTERN UGANDA
+
+#############
+
+
+#loading data
+
+```{}
+data<-read.csv("C:\\CONSULTANCIES\\DOCS\\COVID_WORK\\DATA\\west_1.csv")
+```
+
+#declaring time series data
+
+```{}
+w<-ts(data[,2], start=c(3,1), frequency =12)
+```
+#timeplot
+
+```{}
+autoplot(w)
+```
+
+```{}
+autoplot(w)+ 
+ggtitle("Trend of COVID-19 cases in Western Uganda")+
+ylab("COVID-19 cases")
+```
+
+#investigating trend transformations
+
+```{}
+Dw<-diff(w)
+```
+
+#Timeplot for differenced data
+
+```{}
+autoplot(Dw)+ 
+ggtitle("Trend of change of COVID-19 cases in Western Uganda")+
+ylab("COVID-19 cases")
+```
+
+#investigating seasonality in trend
+
+```{}
+ggseasonplot(Dw)+ ggtitle("Seasonal trends of COVID-19 in Western Uganda")+
+ylab("COVID-19 cases")
+```
+
+##Using another seasonal plot to check
+
+```{}
+ggsubseriesplot(Dw)
+```
+
+###> there seems to be no seasonality in the trends
+
+#Forecasting using ARIMA model
+
+```{}
+fit_arima_w<-auto.arima(w,d=1,D=1,stepwise = FALSE, approximation=FALSE, trace=TRUE)
+print(summary(fit_arima_w))
+checkresiduals(fit_arima_w)
+```
+
+#forecasting the COVID-19 trends in eastern Uganda
+
+```{}
+fcst_w<- forecast(fit_arima_w,h=12)
+autoplot(fcst_w)
+```
+
+#CENTRAL UGANDA 
+
+
+#loading data
+
+```{}
+data<-read.csv("C:\\CONSULTANCIES\\DOCS\\COVID_WORK\\DATA\\central_1.csv")
+```
+
+#declaring time series data
+
+```{}
+x<-ts(data[,2], start=c(3,1), frequency =12)
+```
+#timeplot
+```{}
+autoplot(x)
+```
+
+```{}
+autoplot(x)+ 
+ggtitle("Trend of COVID-19 cases in Central Uganda")+
+ylab("COVID-19 cases")
+```
+
+
+#investigating trend transformations
+
+```{}
+Dx<-diff(x)
+```
+
+#Timeplot for differenced data
+
+```{}
+autoplot(Dx)+ 
+ggtitle("Trend of change of COVID-19 cases in Central Uganda")+
+ylab("COVID-19 cases")
+```
+
+#investigating seasonality in trend
+
+```{}
+ggseasonplot(Dx)+ ggtitle("Seasonal trends of COVID-19 in Western Uganda")+
+ylab("COVID-19 cases")
+```
+
+##Using another seasonal plot to check
+
+```{}
+ggsubseriesplot(Dx)
+```
+
+###> there seems to be no seasonality in the trends
+
+#Forecasting using ARIMA model
+
+```{}
+fit_arima_x<-auto.arima(x,d=1,D=1,stepwise = FALSE, approximation=FALSE, trace=TRUE)
+print(summary(fit_arima_x))
+checkresiduals(fit_arima_x)
+```
+
+#forecasting the COVID-19 trends in eastern Uganda
+
+```{}
+fcst_x<- forecast(fit_arima_x,h=12)
+autoplot(fcst_x)
+```
+
+#merging graphs 
+
+##trends
+
+```{}
+par(mfrow=c(3,1))
+
+autoplot(e)+ 
+ggtitle("Trend of COVID-19 cases in Eastern Uganda")+
+ylab("COVID-19 cases")
+
+autoplot(n)+ 
+ggtitle("Trend of COVID-19 cases in Northern Uganda")+
+ylab("COVID-19 cases")
+
+autoplot(w)+ 
+ggtitle("Trend of COVID-19 cases in Western Uganda")+
+ylab("COVID-19 cases")
+
+autoplot(x)+ 
+ggtitle("Trend of COVID-19 cases in Central Uganda")+
+ylab("COVID-19 cases")
+```
+
+
+##forecasts 
+
+```{}
+par(mfrow=c(2,2))
+
+autoplot(fcst)
+autoplot(fcst_n)
+autoplot(fcst_w)
+autoplot(fcst_x)
+```
+
+
+
+
+
+
+
+
+#ALL UGANDA
+
+
+#loading data
+
+```{}
+data<-read.csv("C:\\CONSULTANCIES\\DOCS\\COVID_WORK\\DATA\\2_uganda_covid_cases.csv")
+```
+
+#declaring time series data
+
+```{}
+u<-ts(data[,2], start=c(3,1), frequency =12)
+```
+#timeplot
+
+```{}
+autoplot(u)
+```
+
+```{}
+autoplot(u)+ 
+ggtitle("Trend of COVID-19 cases in Uganda")+
+ylab("COVID-19 cases")
+```
+
+#investigating trend transformations
+
+```{}
+Du<-diff(u)
+```
+
+#Timeplot for differenced data
+
+```{}
+autoplot(Du)+ 
+ggtitle("Trend of change of COVID-19 cases in Uganda")+
+ylab("COVID-19 cases")
+```
+
+#investigating seasonality in trend
+
+```{}
+ggseasonplot(Du)+ ggtitle("Seasonal trends of COVID-19 in Uganda")+
+ylab("COVID-19 cases")
+```
+
+##Using another seasonal plot to check
+
+```{}
+ggsubseriesplot(Du)
+```
+
+###> there seems to be no seasonality in the trends
+
+#Forecasting using ARIMA model
+
+```{}
+fit_arima_u<-auto.arima(u,d=1,D=1,stepwise = FALSE, approximation=FALSE, trace=TRUE)
+print(summary(fit_arima_u))
+checkresiduals(fit_arima_u)
+```
+
+#forecasting the COVID-19 trends in Uganda
+
+```{}
+fcst_u<- forecast(fit_arima_u,h=36)
+autoplot(fcst_u)
+```
+
+#including the last 1 year
+
+```{}
+fcst_u<- forecast(fit_arima_u,h=36)
+autoplot(fcst_u, include=12, col='red')
+```
+
+
+
+
+  
+
+ 
+
+ 
+ 
+ 
+
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+
+  
+
+ 
+
+ 
+ 
+ 
+
+
+ 
+ 
+ 
+
+ 
+ 
+ 
